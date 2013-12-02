@@ -1,0 +1,6 @@
+{
+  "name": "GdG-1.02",
+  "dependencies": {
+    "jquery": "~2.0.3"
+  }
+}
