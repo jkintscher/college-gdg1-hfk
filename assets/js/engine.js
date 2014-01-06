@@ -12,21 +12,33 @@ $(function() {
       FLOOR_HEIGHT = height / FLOOR_COUNT,
       PLAYER_BASE_SPEED = 12;
 
+  var Hole = function(x_left, x_right) {
+    var left  = x_left,
+        right = x_right;
+
+    this.getPosition = function() {
+      return {
+        left:  left,
+        right: right
+      };
+    };
+  };
+
   var Floor = function() {
     var tiles = [],
-        holes = 0,
+        holes = [],
         y = 0;
 
     for(var i = 0; i < TILE_COUNT; ++i) {
-      tiles[i] = !(holes < 2 && Math.random() > 0.8);
+      tiles[i] = !(holes.length < 2 && Math.random() > 0.8);
       if(!tiles[i]) {
-        holes++;
+        holes.push(this, i * TILE_WIDTH, (i + 1) * TILE_WIDTH);
       }
     }
 
     this.render = function(offset) {
       y = offset;
-      var tile_offset  = 0;
+      var tile_offset = 0;
       ctx.beginPath();
       for(var i = 0; i < tiles.length; ++i) {
         ctx.moveTo(tile_offset, offset);
