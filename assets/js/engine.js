@@ -4,7 +4,7 @@ $(function() {
       width  = canvas.width(),
       height = canvas.height(),
       floors = [],
-      player_1,
+      player,
       GLOBAL_OFFSET = 0,
       FLOOR_COUNT = 10,
       TILE_COUNT = 20,
@@ -36,7 +36,7 @@ $(function() {
         }
       }
       ctx.stroke();
-    }
+    };
 
     this.getY = function() {
       return y;
@@ -70,14 +70,14 @@ $(function() {
       ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
       ctx.fillStyle = color;
       ctx.fill();
-    }
+    };
 
     this.getPosition = function() {
       return {
         x: x,
         y: y
       };
-    }
+    };
 
     return this;
   };
@@ -99,7 +99,7 @@ $(function() {
       floors[i].render(GLOBAL_OFFSET + FLOOR_HEIGHT * (i + 1));
     }
 
-    player_1.render();
+    player.render();
 
     requestAnimationFrame(render);
   };
@@ -109,7 +109,8 @@ $(function() {
       floors.push(new Floor());
     }
 
-    player_1 = new Player(floors[6], 37, 39, 'green');
+    // Controlled by LEFT / RIGHT
+    player = new Player(floors[6], 37, 39, 'green');
 
     render();
   };
