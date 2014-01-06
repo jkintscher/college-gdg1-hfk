@@ -111,12 +111,13 @@ $(function() {
 
   var Player = function(start_floor, left_key, right_key, color) {
     var BASE_SPEED = 12,
+        FALL_SPEED =  8,
         WIDTH  = 20,
         HEIGHT = 20,
         speed = 0,
+        floor = start_floor,
         x = width / 2,
-        y = 100,
-        floor = start_floor;
+        y;
 
     $(document.body).keydown(function(evt) {
       if(evt.which == left_key) {
@@ -136,15 +137,18 @@ $(function() {
       if(new_x > 0 && new_x < width) {
         x = new_x;
       }
-
       if(floor.hasHoleAt(x)) {
         floor = staircase.getNextFloor(floor);
       }
     };
 
     this.render = function() {
-      y = floor.getY() - HEIGHT - ctx.lineWidth / 2;
-      ctx.beginPath();
+      var offset = HEIGHT + ctx.lineWidth / 2;
+      if((floor.getY() - offset) > y) {
+        y += FALL_SPEED;
+      } else {
+        y = floor.getY() - offset;
+      }
 
       ctx.fillStyle = color;
       ctx.fillRect(x, y, WIDTH, HEIGHT);
