@@ -16,7 +16,7 @@ $(function() {
     var left  = x_left,
         right = x_right;
 
-    this.getPosition = function() {
+    this.getDimensions = function() {
       return {
         left:  left,
         right: right
@@ -32,7 +32,7 @@ $(function() {
     for(var i = 0; i < TILE_COUNT; ++i) {
       tiles[i] = !(holes.length < 2 && Math.random() > 0.8);
       if(!tiles[i]) {
-        holes.push(this, i * TILE_WIDTH, (i + 1) * TILE_WIDTH);
+        holes.push(new Hole(i * TILE_WIDTH, (i + 1) * TILE_WIDTH));
       }
     }
 
@@ -49,6 +49,15 @@ $(function() {
       }
       ctx.stroke();
     };
+
+    this.hasHoleAt = function(x) {
+      for(var i = 0; i < holes.length; ++i) {
+        if(holes[i].getDimensions().left < x && holes[i].getDimensions().right > x) {
+          return true;
+        }
+      }
+      return false;
+    }
 
     this.getY = function() {
       return y;
@@ -80,6 +89,15 @@ $(function() {
       var new_x = x + (PLAYER_BASE_SPEED + speed) * direction;
       if(new_x > 0 && new_x < width) {
         x = new_x;
+      }
+
+      if(floor.hasHoleAt(x)) {
+        for(var i = 0; i < floors.length; ++i) {
+          if(floors[i] === floor) {
+            floor = floors[i + 1];
+            break;
+          }
+        }
       }
     };
 
