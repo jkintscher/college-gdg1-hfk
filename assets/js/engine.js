@@ -66,7 +66,7 @@ $(function() {
   };
 
   var Floor = function() {
-    var TILE_COUNT = 20,
+    var TILE_COUNT = 15,
         TILE_WIDTH = width / TILE_COUNT,
         tiles = [],
         holes = [],
@@ -93,9 +93,9 @@ $(function() {
       ctx.stroke();
     };
 
-    this.hasHoleAt = function(x) {
+    this.hasHoleAt = function(left, right) {
       for(var i = 0; i < holes.length; ++i) {
-        if(holes[i].getDimensions().left < x && holes[i].getDimensions().right > x) {
+        if(holes[i].getDimensions().left < left && holes[i].getDimensions().right > right) {
           return true;
         }
       }
@@ -137,7 +137,7 @@ $(function() {
       if(new_x > 0 && new_x < width) {
         x = new_x;
       }
-      if(floor.hasHoleAt(x)) {
+      if(floor.hasHoleAt(x, x + WIDTH)) {
         floor = staircase.getNextFloor(floor);
       }
     };
