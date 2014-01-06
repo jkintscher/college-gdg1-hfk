@@ -10,7 +10,7 @@ $(function() {
       TILE_COUNT = 20,
       TILE_WIDTH = width / TILE_COUNT,
       FLOOR_HEIGHT = height / FLOOR_COUNT,
-      PLAYER_SPEED = 12;
+      PLAYER_BASE_SPEED = 12;
 
   var Floor = function() {
     var tiles = [],
@@ -47,15 +47,21 @@ $(function() {
 
   var Player = function(start_floor, left_key, right_key, color) {
     var floor = start_floor,
+        speed = 0,
         x = width / 2,
         y = 100;
 
     $(document.body).keydown(function(evt) {
       if(evt.which == left_key) {
-        x -= PLAYER_SPEED;
+        x -= PLAYER_BASE_SPEED + speed;
       } else if(evt.which == right_key) {
-        x += PLAYER_SPEED;
+        x += PLAYER_BASE_SPEED + speed;
       }
+      speed += 0.75;
+    });
+
+    $(document.body).keyup(function(evt) {
+      speed = 0;
     });
 
     this.render = function() {
