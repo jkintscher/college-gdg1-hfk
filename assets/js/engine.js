@@ -108,7 +108,13 @@ $(function() {
 
     player.render();
 
-    requestAnimationFrame(render);
+    if(player.getPosition().y > 1) {
+      requestAnimationFrame(render);
+    } else {
+      if(confirm("You lose! Play again?")) {
+        window.location.reload();
+      }
+    }
   };
 
   var init = function() {
@@ -116,9 +122,7 @@ $(function() {
       floors.push(new Floor());
     }
 
-    // Controlled by LEFT / RIGHT
     player = new Player(floors[6], 37, 39, 'green');
-
     render();
   };
 
