@@ -68,14 +68,17 @@ $(function() {
   var Floor = function() {
     var TILE_COUNT = 15,
         TILE_WIDTH = width / TILE_COUNT,
+        MAX_HOLES_PER_FLOOR = 2,
         tiles = [],
         holes = [],
         y = 0;
 
     for(var i = 0; i < TILE_COUNT; ++i) {
-      tiles[i] = !(holes.length < 2 && Math.random() > 0.8);
-      if(!tiles[i]) {
+      if((holes.length == 0 && i + 1 == TILE_COUNT) || (holes.length < MAX_HOLES_PER_FLOOR && Math.random() > 0.8)) {
+        tiles[i] = false;
         holes.push(new Hole(i * TILE_WIDTH, (i + 1) * TILE_WIDTH));
+      } else {
+        tiles[i] = true;
       }
     }
 
