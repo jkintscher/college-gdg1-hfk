@@ -3,14 +3,58 @@ $(function() {
       ctx    = canvas[0].getContext('2d'),
       width  = canvas.width(),
       height = canvas.height(),
-      floors = [],
+      staircase,
       player,
-      GLOBAL_OFFSET = 0,
-      FLOOR_COUNT = 10,
       TILE_COUNT = 20,
       TILE_WIDTH = width / TILE_COUNT,
-      FLOOR_HEIGHT = height / FLOOR_COUNT,
       PLAYER_BASE_SPEED = 12;
+
+  var Staircase = function(width, height) {
+    var FLOOR_COUNT  = 10,
+        FLOOR_HEIGHT = height / FLOOR_COUNT,
+        floors = [],
+        offset = 0;
+
+    for(var i = 0; i < FLOOR_COUNT; ++i) {
+      floors.push(new Floor());
+    }
+
+    this.getStartFloor = function() {
+      return floors[floors.length / 2 - 1];
+    };
+
+    this.getNextFloor = function(subject_floor) {
+      for(var i = 0; i < floors.length; ++i) {
+        if(floors[i] === subject_floor) {
+          return floors[i + 1] || null;
+        }
+      }
+      return null;
+    };
+
+    this.appendFloor = function() {
+      delete floors.shift();
+      floors.push(new Floor());
+    };
+
+    this.render = function() {
+      offset--;
+      if((offset % FLOOR_HEIGHT) == 0) {
+        offset = 0;
+        this.appendFloor();
+      }
+
+      ctx.fillStyle = '#EEEEEE';
+      ctx.fillRect(0, 0, width, height);
+      ctx.strokeStyle = 'rgba(0,0,0,1)';
+      ctx.lineWidth = 6;
+
+      for(var i = 0; i < floors.length; ++i) {
+        floors[i].render(offset + FLOOR_HEIGHT * (i + 1));
+      }
+
+    };
+  };
 
   var Hole = function(x_left, x_right) {
     var left  = x_left,
@@ -67,10 +111,12 @@ $(function() {
   };
 
   var Player = function(start_floor, left_key, right_key, color) {
-    var floor = start_floor,
+    var WIDTH  = 20,
+        HEIGHT = 20,
         speed = 0,
         x = width / 2,
-        y = 100;
+        y = 100,
+        floor = start_floor;
 
     $(document.body).keydown(function(evt) {
       if(evt.which == left_key) {
@@ -92,21 +138,16 @@ $(function() {
       }
 
       if(floor.hasHoleAt(x)) {
-        for(var i = 0; i < floors.length; ++i) {
-          if(floors[i] === floor) {
-            floor = floors[i + 1];
-            break;
-          }
-        }
+        floor = staircase.getNextFloor(floor);
       }
     };
 
     this.render = function() {
-      y = floor.getY();
+      y = floor.getY() - HEIGHT - ctx.lineWidth / 2;
       ctx.beginPath();
-      ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+
       ctx.fillStyle = color;
-      ctx.fill();
+      ctx.fillRect(x, y, WIDTH, HEIGHT);
     };
 
     this.getPosition = function() {
@@ -120,22 +161,7 @@ $(function() {
   };
 
   var render = function() {
-    GLOBAL_OFFSET--;
-    if((GLOBAL_OFFSET % FLOOR_HEIGHT) == 0) {
-      GLOBAL_OFFSET = 0;
-      delete floors.shift();
-      floors.push(new Floor());
-    }
-
-    ctx.fillStyle = '#EEEEEE';
-    ctx.fillRect(0, 0, width, height);
-    ctx.strokeStyle = 'rgba(0,0,0,1)';
-    ctx.lineWidth = 6;
-
-    for(var i = 0; i < floors.length; ++i) {
-      floors[i].render(GLOBAL_OFFSET + FLOOR_HEIGHT * (i + 1));
-    }
-
+    staircase.render();
     player.render();
 
     if(player.getPosition().y > 1) {
@@ -148,11 +174,8 @@ $(function() {
   };
 
   var init = function() {
-    for(var i = 0; i < FLOOR_COUNT; ++i) {
-      floors.push(new Floor());
-    }
-
-    player = new Player(floors[6], 37, 39, 'green');
+    staircase = new Staircase(width, height);
+    player = new Player(staircase.getStartFloor(), 37, 39, 'green');
     render();
   };
 
