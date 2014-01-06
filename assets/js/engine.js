@@ -4,10 +4,7 @@ $(function() {
       width  = canvas.width(),
       height = canvas.height(),
       staircase,
-      player,
-      TILE_COUNT = 20,
-      TILE_WIDTH = width / TILE_COUNT,
-      PLAYER_BASE_SPEED = 12;
+      player;
 
   var Staircase = function(width, height) {
     var FLOOR_COUNT  = 10,
@@ -69,7 +66,9 @@ $(function() {
   };
 
   var Floor = function() {
-    var tiles = [],
+    var TILE_COUNT = 20,
+        TILE_WIDTH = width / TILE_COUNT,
+        tiles = [],
         holes = [],
         y = 0;
 
@@ -111,7 +110,8 @@ $(function() {
   };
 
   var Player = function(start_floor, left_key, right_key, color) {
-    var WIDTH  = 20,
+    var BASE_SPEED = 12,
+        WIDTH  = 20,
         HEIGHT = 20,
         speed = 0,
         x = width / 2,
@@ -132,7 +132,7 @@ $(function() {
     });
 
     var move = function(direction) {
-      var new_x = x + (PLAYER_BASE_SPEED + speed) * direction;
+      var new_x = x + (BASE_SPEED + speed) * direction;
       if(new_x > 0 && new_x < width) {
         x = new_x;
       }
