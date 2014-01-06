@@ -53,9 +53,9 @@ $(function() {
 
     $(document.body).keydown(function(evt) {
       if(evt.which == left_key) {
-        x -= PLAYER_BASE_SPEED + speed;
+        move(-1);
       } else if(evt.which == right_key) {
-        x += PLAYER_BASE_SPEED + speed;
+        move(1);
       }
       speed += 0.75;
     });
@@ -63,6 +63,13 @@ $(function() {
     $(document.body).keyup(function(evt) {
       speed = 0;
     });
+
+    var move = function(direction) {
+      var new_x = x + (PLAYER_BASE_SPEED + speed) * direction;
+      if(new_x > 0 && new_x < width) {
+        x = new_x;
+      }
+    };
 
     this.render = function() {
       y = floor.getY();
