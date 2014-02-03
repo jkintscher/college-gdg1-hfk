@@ -37,6 +37,7 @@ $(function() {
   $('#start-game').click(function() {
     Runtime.stop();
     Runtime.init();
+    update_counters();
   });
 
   $('#pause-game').click(function() {
