@@ -1,3 +1,18 @@
 canvas {
   border: 10px solid #777;
 }
+
+.counters {
+  margin: 10px;
+  font-weight: bold;
+}
+  .counters dt,
+  .counters dd {
+    display: inline-block;
+  }
+  .counters dt::after {
+    content: ':';
+  }
+  .counters dd {
+    margin-right: 1em;
+  }

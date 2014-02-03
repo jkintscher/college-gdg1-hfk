@@ -1,6 +1,6 @@
 var Staircase = function(width, height) {
   // Constants
-  var SPEED = 2,
+  var speed = 1,
       FLOOR_COUNT  = 5,
       FLOOR_HEIGHT = height / FLOOR_COUNT;
 
@@ -29,14 +29,19 @@ var Staircase = function(width, height) {
     return null;
   };
 
+  this.setSpeed = function(new_speed) {
+    speed = new_speed;
+  };
+
   this.appendFloor = function() {
     delete floors.shift();
     floors.push(new Floor(width, floors[floors.length - 1]));
   };
 
   this.render = function(ctx) {
-    offset -= SPEED;
-    if((offset % FLOOR_HEIGHT) == 0) {
+    offset -= speed;
+    console.debug(offset, FLOOR_HEIGHT, offset % FLOOR_HEIGHT);
+    if(-offset > FLOOR_HEIGHT) {
       offset = 0;
       this.appendFloor();
     }

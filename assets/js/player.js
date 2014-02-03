@@ -1,14 +1,14 @@
 var Player = function(staircase, width, left_key, right_key) {
   // Constants
   var BASE_SPEED = 12,
-      FALL_SPEED =  20,
       WIDTH  = 28,
       HEIGHT = 67;
 
   // Runtime variables
   var speed = 0,
-      direction = 'left',
-      step      = true,
+      fall_speed =  20,
+      direction  = 'left',
+      step       = true,
       floor = staircase.getStartFloor(),
       x = width / 2,
       y;
@@ -41,13 +41,14 @@ var Player = function(staircase, width, left_key, right_key) {
     }
     if(floor.hasHoleAt(x, x + WIDTH)) {
       floor = staircase.getNextFloor(floor);
+      $(document.body).trigger('game:floor-changed', floor);
     }
   };
 
   this.render = function(ctx) {
     var offset = HEIGHT + 24 / 2;
     if((floor.getY() - offset) > y) {
-      y += FALL_SPEED;
+      y += fall_speed;
     } else {
       y = floor.getY() - offset;
     }

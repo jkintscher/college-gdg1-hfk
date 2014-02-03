@@ -30,6 +30,8 @@ $(function() {
       ctx    = canvas[0].getContext('2d'),
       width  = canvas.width(),
       height = canvas.height(),
+      level  = 1,
+      floors = 0,
       staircase,
       player;
 
@@ -47,10 +49,23 @@ $(function() {
   };
 
   var init = function() {
+    $('.counters .floors').text(floors);
+    $('.counters .level' ).text(level);
+
     staircase = new Staircase(width, height);
     player = new Player(staircase, width, 37, 39);
     render();
   };
+
+  $(document.body).on('game:floor-changed', function(floor) {
+    floors++;
+    $('.counters .floors').text(floors);
+    if(floors % 10 === 0) {
+      level++;
+      staircase.setSpeed(1 * level);
+      $('.counters .level').text(level);
+    }
+  });
 
   init();
 });
