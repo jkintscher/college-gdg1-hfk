@@ -48,7 +48,7 @@ $(function() {
 
   var init = function() {
     staircase = new Staircase(width, height);
-    player = new Player(staircase, width, 37, 39, 'green');
+    player = new Player(staircase, width, 37, 39);
     render();
   };
 

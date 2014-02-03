@@ -1,8 +1,8 @@
-var Player = function(staircase, width, left_key, right_key, color) {
+var Player = function(staircase, width, left_key, right_key) {
   var BASE_SPEED = 12,
       FALL_SPEED =  8,
-      WIDTH  = 20,
-      HEIGHT = 20,
+      WIDTH  = 28,
+      HEIGHT = 67,
       speed = 0,
       floor = staircase.getStartFloor(),
       x = width / 2,
@@ -32,15 +32,14 @@ var Player = function(staircase, width, left_key, right_key, color) {
   };
 
   this.render = function(ctx) {
-    var offset = HEIGHT + ctx.lineWidth / 2;
+    var offset = HEIGHT + 2 / 2;
     if((floor.getY() - offset) > y) {
       y += FALL_SPEED;
     } else {
       y = floor.getY() - offset;
     }
 
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y, WIDTH, HEIGHT);
+    ctx.drawImage(IMAGES.character.left[0], x, y, WIDTH, HEIGHT);
   };
 
   this.getPosition = function() {
