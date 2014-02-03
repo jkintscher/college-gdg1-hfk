@@ -1,7 +1,10 @@
 var Staircase = function(width, height) {
+  // Constants
   var FLOOR_COUNT  = 10,
-      FLOOR_HEIGHT = height / FLOOR_COUNT,
-      floors = [],
+      FLOOR_HEIGHT = height / FLOOR_COUNT;
+
+  // Runtime variables
+  var floors = [],
       offset = 0;
 
   for(var i = 0; i < FLOOR_COUNT; ++i) {

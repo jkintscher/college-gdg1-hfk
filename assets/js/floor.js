@@ -1,8 +1,11 @@
 var Floor = function(width) {
+  // Constants
   var TILE_COUNT = 15,
       TILE_WIDTH = width / TILE_COUNT,
-      MAX_HOLES_PER_FLOOR = 2,
-      tiles = [],
+      MAX_HOLES_PER_FLOOR = 2;
+
+  // Runtime variables
+  var tiles = [],
       holes = [],
       y = 0;
 
