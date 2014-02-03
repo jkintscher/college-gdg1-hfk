@@ -30,8 +30,9 @@ $(function() {
       ctx    = canvas[0].getContext('2d'),
       width  = canvas.width(),
       height = canvas.height(),
-      level  = 1,
-      floors = 0,
+      level,
+      floors,
+      frame,
       staircase,
       player;
 
@@ -40,11 +41,9 @@ $(function() {
     player.render(ctx);
 
     if(player.getPosition().y > 1) {
-      requestAnimationFrame(render);
+      frame = requestAnimationFrame(render);
     } else {
-      if(confirm("You lose! Play again?")) {
-        window.location.reload();
-      }
+      alert('You lose!');
     }
   };
 
@@ -54,9 +53,11 @@ $(function() {
   };
 
   var init = function() {
+    level  = 1;
+    floors = 0;
     update_counters();
     staircase = new Staircase(width, height);
-    player = new Player(staircase, width, 37, 39);
+    player    = new Player(staircase, width, 37, 39);
     render();
   };
 
@@ -74,5 +75,10 @@ $(function() {
     update_counters();
   });
 
-  init();
+  $('#start-game').click(function() {
+    if(frame) {
+      window.cancelAnimationFrame(frame);
+    }
+    init();
+  });
 });
