@@ -9,7 +9,7 @@ var Staircase = function(width, height) {
   }
 
   this.getStartFloor = function() {
-    return floors[floors.length / 2 - 1];
+    return floors[Math.ceil(floors.length / 2 - 1)];
   };
 
   this.getNextFloor = function(subject_floor) {
