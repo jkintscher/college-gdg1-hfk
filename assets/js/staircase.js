@@ -1,6 +1,7 @@
 var Staircase = function(width, height) {
   // Constants
-  var FLOOR_COUNT  = 10,
+  var SPEED = 2,
+      FLOOR_COUNT  = 5,
       FLOOR_HEIGHT = height / FLOOR_COUNT;
 
   // Runtime variables
@@ -34,7 +35,7 @@ var Staircase = function(width, height) {
   };
 
   this.render = function(ctx) {
-    offset--;
+    offset -= SPEED;
     if((offset % FLOOR_HEIGHT) == 0) {
       offset = 0;
       this.appendFloor();

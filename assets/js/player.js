@@ -1,9 +1,9 @@
 var Player = function(staircase, width, left_key, right_key) {
   // Constants
   var BASE_SPEED = 12,
-      FALL_SPEED =  8,
-      WIDTH  = 14,
-      HEIGHT = 33;
+      FALL_SPEED =  20,
+      WIDTH  = 28,
+      HEIGHT = 67;
 
   // Runtime variables
   var speed = 0,
@@ -45,7 +45,7 @@ var Player = function(staircase, width, left_key, right_key) {
   };
 
   this.render = function(ctx) {
-    var offset = HEIGHT + 2 / 2;
+    var offset = HEIGHT + 24 / 2;
     if((floor.getY() - offset) > y) {
       y += FALL_SPEED;
     } else {

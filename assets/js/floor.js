@@ -1,6 +1,6 @@
 var Floor = function(width, prev_floor) {
   // Constants
-  var TILE_COUNT = 9,
+  var TILE_COUNT = 6,
       TILE_WIDTH = width / TILE_COUNT,
       MAX_HOLES_PER_FLOOR = 2;
 
