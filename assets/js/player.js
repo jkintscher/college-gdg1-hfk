@@ -1,8 +1,9 @@
 var Player = function(staircase, width, left_key, right_key) {
   var BASE_SPEED = 12,
       FALL_SPEED =  8,
-      WIDTH  = 28,
-      HEIGHT = 67,
+      DIRECTION  = 'left',
+      WIDTH  = 14,
+      HEIGHT = 33,
       speed = 0,
       floor = staircase.getStartFloor(),
       x = width / 2,
@@ -10,9 +11,11 @@ var Player = function(staircase, width, left_key, right_key) {
 
   $(document.body).keydown(function(evt) {
     if(evt.which == left_key) {
-      move(-1);
+      DIRECTION = 'left';
+      move();
     } else if(evt.which == right_key) {
-      move(1);
+      DIRECTION = 'right';
+      move();
     }
     speed += 0.75;
   });
@@ -21,8 +24,13 @@ var Player = function(staircase, width, left_key, right_key) {
     speed = 0;
   });
 
-  var move = function(direction) {
-    var new_x = x + (BASE_SPEED + speed) * direction;
+  var move = function() {
+    var new_x = x;
+    if(DIRECTION === 'left') {
+      new_x -= BASE_SPEED + speed;
+    } else {
+      new_x += BASE_SPEED + speed;
+    }
     if(new_x > 0 && new_x < width) {
       x = new_x;
     }
@@ -39,7 +47,7 @@ var Player = function(staircase, width, left_key, right_key) {
       y = floor.getY() - offset;
     }
 
-    ctx.drawImage(IMAGES.character.left[0], x, y, WIDTH, HEIGHT);
+    ctx.drawImage(IMAGES.character[DIRECTION][0], x, y, WIDTH, HEIGHT);
   };
 
   this.getPosition = function() {
