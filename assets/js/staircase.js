@@ -40,7 +40,6 @@ var Staircase = function(width, height) {
 
   this.render = function(ctx) {
     offset -= speed;
-    console.debug(offset, FLOOR_HEIGHT, offset % FLOOR_HEIGHT);
     if(-offset > FLOOR_HEIGHT) {
       offset = 0;
       this.appendFloor();
