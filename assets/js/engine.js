@@ -76,9 +76,16 @@ $(function() {
   });
 
   $('#start-game').click(function() {
-    if(frame) {
-      window.cancelAnimationFrame(frame);
-    }
+    window.cancelAnimationFrame(frame);
     init();
   });
+
+  $('#pause-game').click(function() {
+    window.cancelAnimationFrame(frame);
+  });
+
+  $('#resume-game').click(function() {
+    render();
+  });
+
 });
