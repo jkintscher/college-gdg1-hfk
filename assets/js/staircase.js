@@ -9,7 +9,7 @@ var Staircase = function(width, height) {
       floor,
       prev_floor;
 
-  for(var i = 0; i < FLOOR_COUNT; ++i) {
+  for(var i = 0; i < (FLOOR_COUNT + 1); ++i) {
     floor = new Floor(width, prev_floor);
     floors.push(floor);
     prev_floor = floor;
