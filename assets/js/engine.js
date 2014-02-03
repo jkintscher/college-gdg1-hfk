@@ -57,15 +57,18 @@ $(function() {
     render();
   };
 
-  $(document.body).on('game:floor-changed', function(floor) {
+  $(document.body).on('game:change-floor', function() {
     floors++;
     $('.counters .floors').text(floors);
     if(floors % 10 === 0) {
-      level++;
-      staircase.setSpeed(1 * level);
-      $('.counters .level').text(level);
+      $(document.body).trigger('game:change-level');
     }
   });
 
+  $(document.body).on('game:change-level', function() {
+    level++;
+    staircase.setSpeed(1.5 * level);
+    $('.counters .level').text(level);
+  });
   init();
 });

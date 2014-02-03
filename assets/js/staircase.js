@@ -1,6 +1,6 @@
 var Staircase = function(width, height) {
   // Constants
-  var speed = 1,
+  var speed = 1.5,
       FLOOR_COUNT  = 5,
       FLOOR_HEIGHT = height / FLOOR_COUNT;
 

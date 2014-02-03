@@ -41,7 +41,7 @@ var Player = function(staircase, width, left_key, right_key) {
     }
     if(floor.hasHoleAt(x, x + WIDTH)) {
       floor = staircase.getNextFloor(floor);
-      $(document.body).trigger('game:floor-changed', floor);
+      $(document.body).trigger('game:change-floor');
     }
   };
 
