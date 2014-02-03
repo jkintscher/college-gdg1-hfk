@@ -35,12 +35,9 @@ var Staircase = function(width, height) {
 
     ctx.fillStyle = '#EEEEEE';
     ctx.fillRect(0, 0, width, height);
-    ctx.strokeStyle = 'rgba(0,0,0,1)';
-    ctx.lineWidth = 6;
 
     for(var i = 0; i < floors.length; ++i) {
       floors[i].render(ctx, offset + FLOOR_HEIGHT * (i + 1));
     }
-
   };
 };

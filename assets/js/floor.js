@@ -16,17 +16,18 @@ var Floor = function(width) {
   }
 
   this.render = function(ctx, offset) {
+    var tile_offset = 0,
+        image;
     y = offset;
-    var tile_offset = 0;
-    ctx.beginPath();
     for(var i = 0; i < tiles.length; ++i) {
-      ctx.moveTo(tile_offset, offset);
-      tile_offset += TILE_WIDTH;
       if(tiles[i]) {
-        ctx.lineTo(tile_offset, offset);
+        image = IMAGES.backgrounds[1];
+      } else {
+        image = IMAGES.stairs[0];
       }
+      ctx.drawImage(image, tile_offset, y - TILE_WIDTH * (420 / 640), TILE_WIDTH, TILE_WIDTH * (420 / 640));
+      tile_offset += TILE_WIDTH;
     }
-    ctx.stroke();
   };
 
   this.hasHoleAt = function(left, right) {
