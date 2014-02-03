@@ -14,7 +14,7 @@ var Floor = function(width) {
       tiles[i] = false;
       holes.push(new Hole(i * TILE_WIDTH, (i + 1) * TILE_WIDTH));
     } else {
-      tiles[i] = true;
+      tiles[i] = Math.round(Math.random());
     }
   }
 
@@ -23,8 +23,8 @@ var Floor = function(width) {
         image;
     y = offset;
     for(var i = 0; i < tiles.length; ++i) {
-      if(tiles[i]) {
-        image = IMAGES.backgrounds[1];
+      if(tiles[i] !== false) {
+        image = IMAGES.backgrounds[tiles[i]];
       } else {
         image = IMAGES.stairs[0];
       }
