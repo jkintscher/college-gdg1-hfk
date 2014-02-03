@@ -48,10 +48,13 @@ $(function() {
     }
   };
 
-  var init = function() {
+  var update_counters = function() {
     $('.counters .floors').text(floors);
     $('.counters .level' ).text(level);
+  };
 
+  var init = function() {
+    update_counters();
     staircase = new Staircase(width, height);
     player = new Player(staircase, width, 37, 39);
     render();
@@ -59,7 +62,7 @@ $(function() {
 
   $(document.body).on('game:change-floor', function() {
     floors++;
-    $('.counters .floors').text(floors);
+    update_counters();
     if(floors % 10 === 0) {
       $(document.body).trigger('game:change-level');
     }
@@ -68,7 +71,8 @@ $(function() {
   $(document.body).on('game:change-level', function() {
     level++;
     staircase.setSpeed(1.5 * level);
-    $('.counters .level').text(level);
+    update_counters();
   });
+
   init();
 });
