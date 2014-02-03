@@ -2,6 +2,7 @@ var Player = function(staircase, width, left_key, right_key) {
   var BASE_SPEED = 12,
       FALL_SPEED =  8,
       DIRECTION  = 'left',
+      STEP       = true,
       WIDTH  = 14,
       HEIGHT = 33,
       speed = 0,
@@ -18,6 +19,7 @@ var Player = function(staircase, width, left_key, right_key) {
       move();
     }
     speed += 0.75;
+    STEP = !STEP;
   });
 
   $(document.body).keyup(function(evt) {
@@ -47,7 +49,7 @@ var Player = function(staircase, width, left_key, right_key) {
       y = floor.getY() - offset;
     }
 
-    ctx.drawImage(IMAGES.character[DIRECTION][0], x, y, WIDTH, HEIGHT);
+    ctx.drawImage(IMAGES.character[DIRECTION][+STEP], x, y, WIDTH, HEIGHT);
   };
 
   this.getPosition = function() {
