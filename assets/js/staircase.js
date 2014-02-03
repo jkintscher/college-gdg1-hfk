@@ -5,10 +5,14 @@ var Staircase = function(width, height) {
 
   // Runtime variables
   var floors = [],
-      offset = 0;
+      offset = 0,
+      floor,
+      prev_floor;
 
   for(var i = 0; i < FLOOR_COUNT; ++i) {
-    floors.push(new Floor(width));
+    floor = new Floor(width, prev_floor);
+    floors.push(floor);
+    prev_floor = floor;
   }
 
   this.getStartFloor = function() {
@@ -26,7 +30,7 @@ var Staircase = function(width, height) {
 
   this.appendFloor = function() {
     delete floors.shift();
-    floors.push(new Floor(width));
+    floors.push(new Floor(width, floors[floors.length - 1]));
   };
 
   this.render = function(ctx) {
