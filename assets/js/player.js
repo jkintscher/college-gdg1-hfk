@@ -16,12 +16,13 @@ var Player = function(staircase, width, left_key, right_key) {
   $(document.body).keydown(function(evt) {
     if(evt.which == left_key) {
       direction = 'left';
+      move();
     } else if(evt.which == right_key) {
       direction = 'right';
+      move();
     }
-    move();
     speed += 0.75;
-    step   = !step;
+    step = !step;
   });
 
   $(document.body).keyup(function(evt) {
